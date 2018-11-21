@@ -11,6 +11,8 @@ export interface ApolloProviderProps<TCache> {
   children: React.ReactNode;
 }
 
+export const ApolloContext = React.createContext({})
+
 export default class ApolloProvider<TCache> extends Component<ApolloProviderProps<TCache>> {
   static propTypes = {
     client: PropTypes.object.isRequired,
@@ -49,6 +51,15 @@ export default class ApolloProvider<TCache> extends Component<ApolloProviderProp
   }
 
   render() {
-    return this.props.children;
+    return (
+      <ApolloContext.Provider
+        value={{
+          client: this.props.client,
+          operations: (this.props.client as any).__operations_cache__,
+        }}
+      >
+        {this.props.children}
+      </ApolloContext.Provider>
+    );
   }
 }

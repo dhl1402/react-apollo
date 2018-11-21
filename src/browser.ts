@@ -21,6 +21,8 @@ export { graphql } from './graphql';
 export { default as withApollo } from './withApollo';
 export * from './withApollo';
 
+export { default as useQuery } from './hooks/useQuery';
+
 export * from './types';
 
 // XXX remove in the next breaking semver change (3.0)
