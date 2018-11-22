@@ -22,6 +22,8 @@ export { default as withApollo } from './withApollo';
 export * from './withApollo';
 
 export { default as useQuery } from './hooks/useQuery';
+export { default as useMutation } from './hooks/useMutation';
+export { default as useClient } from './hooks/useClient';
 
 export * from './types';
 
