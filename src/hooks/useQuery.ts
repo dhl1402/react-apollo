@@ -13,7 +13,7 @@ export default (props: QueryProps<any, OperationVariables>) => {
 
   useEffect(() => {
     query.current.componentDidMount(props);
-    return query.current.componentWillUnmount;
+    return () => query.current.componentWillUnmount();
   }, []);
 
   useEffect(query.current.removeQuerySubscription, [props.skip, props.query]);
