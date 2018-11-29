@@ -16,22 +16,26 @@ export default (props: QueryProps<any, OperationVariables>) => {
     return () => query.current.componentWillUnmount();
   }, []);
 
-  useEffect(query.current.removeQuerySubscription, [props.skip, props.query]);
+  // useEffect(() => {
+  //   TODO: call only when props skip or props.query changed (avoid first call)
+  //   query.current.removeQuerySubscription()
+  // }, [props.skip, props.query]);
 
   useEffect(() => {
-    if (client !== query.current.client) {
-      query.current.onClientUpdated(props, client);
-    }
-    query.current.updateQuery(props);
-    if(!props.skip) {
-      query.current.startQuerySubscription(props);
-    }
-  }, [props, client])
+      if (client !== query.current.client) {
+        query.current.onClientUpdated(props, client);
+      }
+      query.current.updateQuery(props);
+      if (!props.skip) {
+        query.current.startQuerySubscription(props);
+      }
+    },
+    [props, props, client],
+  );
 
   useEffect(() => {
     query.current.componentDidUpdate(props);
   });
 
   return query.current.getQueryResult(props);
-}
-
+};
