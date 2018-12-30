@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, useContext } from 'react';
 import Query from './Query';
 import { OperationVariables } from '../types';
 import { QueryProps } from './Query';
@@ -11,17 +11,17 @@ export default (props: QueryProps<any, OperationVariables>) => {
   const query = useRef(new Query(props, context, forceUpdate));
   const client = getClient(props, context);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     query.current.componentDidMount(props);
     return () => query.current.componentWillUnmount();
   }, []);
 
-  // useEffect(() => {
-  //   TODO: call only when props skip or props.query changed (avoid first call)
-  //   query.current.removeQuerySubscription()
-  // }, [props.skip, props.query]);
+  useLayoutEffect(() => {
+    // TODO: call only when props.skip or props.query changed (avoid first call)
+    query.current.removeQuerySubscription()
+  }, [props.skip, props.query]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
       if (client !== query.current.client) {
         query.current.onClientUpdated(props, client);
       }
@@ -30,10 +30,10 @@ export default (props: QueryProps<any, OperationVariables>) => {
         query.current.startQuerySubscription(props);
       }
     },
-    [props, props, client],
+    [props, client],
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     query.current.componentDidUpdate(props);
   });
 
