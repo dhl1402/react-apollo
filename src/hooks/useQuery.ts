@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useLayoutEffect, useContext } from 'react';
+import { useState, useRef, useLayoutEffect, useContext } from 'react';
 import Query from './Query';
 import { OperationVariables } from '../types';
 import { QueryProps } from './Query';
@@ -16,10 +16,10 @@ export default (props: QueryProps<any, OperationVariables>) => {
     return () => query.current.componentWillUnmount();
   }, []);
 
-  useLayoutEffect(() => {
-    // TODO: call only when props.skip or props.query changed (avoid first call)
-    query.current.removeQuerySubscription()
-  }, [props.skip, props.query]);
+  // useEffect(() => {
+  //   TODO: call only when props skip or props.query changed (avoid first call)
+  //   query.current.removeQuerySubscription()
+  // }, [props.skip, props.query]);
 
   useLayoutEffect(() => {
       if (client !== query.current.client) {
